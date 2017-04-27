@@ -92,7 +92,7 @@ const serveDir = (dir, req, res, next) => {
 						}
 					});
 				}
-			}
+			};
 
 			// Check what compression the client supports
 

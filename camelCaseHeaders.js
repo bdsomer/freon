@@ -8,7 +8,7 @@ const parseObject = (parseFunction, object) => {
 	// Map the object's keys
 
 	const objectKeys = Object.keys(object);
-	const newObjectKeys = Object.keys(object).map(parseFunction)
+	const newObjectKeys = Object.keys(object).map(parseFunction);
 
 	// Create a new object with the values
 
@@ -18,7 +18,7 @@ const parseObject = (parseFunction, object) => {
 	}
 
 	return toReturn;
-}
+};
 module.exports = {
 	/**
 	 * Converts the object's HTTP header keys keys to `camelCase`

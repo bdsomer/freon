@@ -102,7 +102,7 @@ module.exports = {
 			return new Promise((resolve, reject) => {
 				request('/someText.txt', (data, statusCode, headers) => {
 					try {
-						assert.strictEqual(headers['contentType'], 'text/plain');
+						assert.strictEqual(headers.contentType, 'text/plain');
 						resolve();
 					} catch (err) {
 						reject(err);
@@ -113,7 +113,7 @@ module.exports = {
 			return new Promise((resolve, reject) => {
 				request('/subdir/subTest.txt', (data, statusCode, headers) => {
 					try {
-						assert.strictEqual(headers['contentEncoding'], 'gzip');
+						assert.strictEqual(headers.contentEncoding, 'gzip');
 						resolve();
 					} catch (err) {
 						reject(err);

@@ -70,7 +70,7 @@ module.exports = function getAcceptedEncodings(acceptHeader) {
 			return {
 				'c'	: element,
 				'q'	: 1
-			}
+			};
 		}
 	});
 
@@ -90,4 +90,4 @@ module.exports = function getAcceptedEncodings(acceptHeader) {
 
 	return acceptArray;
 
-}
+};

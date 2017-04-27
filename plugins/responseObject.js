@@ -63,7 +63,7 @@ module.exports = function(req, res, next) {
 		// Call res.deleteCookie on each element
 
 		names.forEach(name => this.deleteCookie(name));
-	}
+	};
 
 	// Make sure to initalize the 'Set-Cookie' header on res.writeHead
 
@@ -105,7 +105,7 @@ module.exports = function(req, res, next) {
 
 	res.setHeader = function(name, value) {
 		_setHeader.call(this, camelCaseHeaders.camelStringToHeader(name), value);
-	}
+	};
 
 	res.redirect = function(url, statusCode) {
 
@@ -229,4 +229,4 @@ module.exports = function(req, res, next) {
 	};
 
 	next();
-}
+};

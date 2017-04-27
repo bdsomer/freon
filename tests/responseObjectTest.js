@@ -23,7 +23,7 @@ const testForCookie = (res, cookieName, cookieValue, cookieOptions) => {
 	testCookieObject[cookieName] = {
 		'value' : cookieValue,
 		'options' : cookieOptions
-	}
+	};
 	assert.deepEqual(res.cookies[cookieName], testCookieObject[cookieName]);
 };
 
@@ -138,7 +138,7 @@ module.exports = {
 			res.endFile(testFilePath);
 		}, (statusCode, headers) => {
 			assert.deepStrictEqual(headers.contentType, 'text/plain');
-		}), 'should send the correct content-type header' : test(res => {
+		}), 'should send the correct last-modified header' : test(res => {
 			res.endFile(testFilePath);
 		}, (statusCode, headers) => {
 			assert.deepStrictEqual(headers.lastModified, testFileLastModified);

@@ -104,7 +104,7 @@ class Application {
 	}
 
 	/**
-	 * Freon's request handler.
+	 * Freon's request handler. This function should not be called directly.
 	 * @param {request} req The incoming request.
 	 * @param {response} res The response to be sent.
 	 */
@@ -214,7 +214,13 @@ class Application {
 				// Check that a handler was found
 
 				if (handlerCallback) {
+					// Set the app property
+
 					res.app = this;
+
+					// Call the handler
+
+					handlerCallback(req, res);
 				} else {
 
 					// If no handlers were found, send a 404
@@ -222,10 +228,6 @@ class Application {
 					send404();
 				}
 			}
-
-			// Call the handler
-
-			handlerCallback(req, res);
 		});
 	}
 

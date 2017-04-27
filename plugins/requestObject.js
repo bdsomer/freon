@@ -129,14 +129,14 @@ module.exports = function(req, res, next) {
 
 		return this.acceptEncodings.indexOf(encoding) > -1;
 
-	}
+	};
 
 	req.acceptsLanguage = function(language) {
 
 		// Check if it is in the language array
 
 		return this.acceptLanguages.indexOf(language) > -1;
-	}
+	};
 
 	next();
 };
