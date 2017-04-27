@@ -86,7 +86,7 @@ app.plugin(require('./fooBarPlugin.js'));
 
 # Static
 
-Use `Freon.static` to serve a static folder. It will be compressed using `gzip` and `deflate` and serve strong `ETag`s. If the file is not found in the directory, it will then pass on the request to the next handlers.
+Use `Freon.static` to serve a static folder. It will be compressed using `gzip` and `deflate`, serve strong `ETag`s, and send the `Last-Modified` header. If the file is not found in the directory, it will then pass on the request to the next handlers.
 
 ```javascript
 const app = new Freon.application(['example.com']);
