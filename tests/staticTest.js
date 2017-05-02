@@ -41,6 +41,24 @@ const createRequest = (pathname, encodings, headers) => {
 
 const cacheFilePath = '/someText.txt';
 
+const checkCachingWithObject = (headerKey, headerValue) => {
+	return new Promise((resolve, reject) => {
+		request(cacheFilePath, (data, statusCode, headers) => {
+			const obj = { };
+			obj[headerKey] = headers[headerValue];
+			request(cacheFilePath, (data, statusCode) => {
+				try {
+					assert.strictEqual(data, undefined);
+					assert.strictEqual(statusCode, 304);
+					resolve();
+				} catch (err) {
+					reject(err);
+				}
+			}, undefined, obj);
+		});
+	});
+};
+
 module.exports = {
 	'static' : {
 		'should return data when requested' : () => {
@@ -70,35 +88,9 @@ module.exports = {
 					});
 				});
 			});
-		}, 'should send a 304 when the correct eTag is served' : () => {
-			return new Promise((resolve, reject) => {
-				request(cacheFilePath, (data, statusCode, headers) => {
-					request(cacheFilePath, (data, statusCode) => {
-						try {
-							assert.strictEqual(data, undefined);
-							assert.strictEqual(statusCode, 304);
-							resolve();
-						} catch (err) {
-							reject(err);
-						}
-					}, undefined, { ifNoneMatch : headers.eTag });
-				});
-			});
-		}, 'should send a 304 when the correct last modified date is served' : () => {
-			return new Promise((resolve, reject) => {
-				request(cacheFilePath, (data, statusCode, headers) => {
-					request(cacheFilePath, (data, statusCode) => {
-						try {
-							assert.strictEqual(data, undefined);
-							assert.strictEqual(statusCode, 304);
-							resolve();
-						} catch (err) {
-							reject(err);
-						}
-					}, undefined, { ifModifiedSince : headers.lastModified });
-				});
-			});
-		}, 'should return the correct mime type' : () => {
+		}, 'should send a 304 when the correct eTag is served' : () => checkCachingWithObject('ifNoneMatch', 'eTag'),
+		'should send a 304 when the correct last modified date is served' : () => checkCachingWithObject('ifModifiedSince', 'lastModified'),
+		'should return the correct mime type' : () => {
 			return new Promise((resolve, reject) => {
 				request('/someText.txt', (data, statusCode, headers) => {
 					try {

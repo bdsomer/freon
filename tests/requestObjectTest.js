@@ -7,7 +7,7 @@ requestObject = require('../plugins/requestObject');
 
 const testUrl = 'http://localhost',
 test = (request, property, expectedValue, deepEqual) => {
-	return it => {
+	return () => {
 		const on404 = () => {
 			throw new Error('404 should not be written.');
 		};

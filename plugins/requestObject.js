@@ -2,7 +2,8 @@ const qs = require('querystring'),
 cookie = require('cookie'),
 url = require('url'),
 userAgent = require('user-agent'),
-acceptParse = require('../accept-parse');
+acceptParse = require('../accept-parse'),
+camelCaseHeaders = require('../camelCaseHeaders');
 
 module.exports = function(req, res, next) {
 
@@ -14,43 +15,9 @@ module.exports = function(req, res, next) {
 
     req.url = url.parse(req.url);
 
-    // Convert all headers to camelCase
-	// ex. 'x-requested-with' becomes 'xRequestedWith', 'cache-control' becomes 'cacheControl', etc.
-
-	const camelCaseHeaders = { };
-
-	// Loop through the entries of req.headers
-
-	Object.entries(req.headers).forEach(([key, value]) => {
-
-		// Split the dashes
-		// ex. 'x-requested-with' becomes ['x', 'requested', 'with'], 'cache-control' becomes ['cache', 'control'], etc.
-
-		const splitHeaders = key.split('-');
-
-		// The start of the current header name is the first in the array, NOT CAPATALIZED
-		// ex. 'x' in 'x-requested-with'
-
-		var camelCaseHeader = splitHeaders[0];
-
-		// Loop through the array
-
-		for (let i = 1; i < splitHeaders.length; i++) {
-
-			// Capatalize the first letter and add it on to the camelCaseHeader variable
-
-			const currentWord = splitHeaders[i];
-			camelCaseHeader += currentWord.charAt(0).toUpperCase() + currentWord.substring(1);
-		}
-
-		// Set the key (ex. 'xRequestedWith' or 'cacheControl') of the camelCaseHeaders to the value of the current header
-
-		camelCaseHeaders[camelCaseHeader] = value;
-	});
-
 	// Set the req.headers object to the camelCase headers
 
-	req.headers = camelCaseHeaders;
+	req.headers = camelCaseHeaders.headerObjectToCamel(req.headers);
 
 	// Set req.ip
 	// First, check the xForwaredFor header
@@ -115,7 +82,7 @@ module.exports = function(req, res, next) {
 
 			// Check if it matches the content type passed in
 
-			if (this.acceptTypes[i].indexOf(contentType) > -1 || contentType.search(new RegExp(this.acceptTypes[i].replace(/([.+?^=!:${}()|\[\]\/\\])/g, '\\$1').replace(/\*/g, '.+'))) === 0) return true;
+			if (this.acceptTypes[i].indexOf(contentType) > -1 || contentType.search(new RegExp(this.acceptTypes[i].replace(/([.+?^=!:${}()|\[\]\/\\])/g, '\\$1').replace(/\*/g, '.+?'))) === 0) return true;
 		}
 
 		// Return false if the acceptance was not found
