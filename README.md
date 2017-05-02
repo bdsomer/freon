@@ -167,3 +167,9 @@ Freon will overwrite the request and response object. The properties and methods
   - `filePath: String` - the path to read the data from. This paramater is also used to set the filename on download.
   - `callback(err): Function?` - calls back when the request has been served.
     - `err: Error?` - the error that occured while reading or getting the last modified date of the file. `undefined` if no error occured.
+- `endCompressed(data, method, callback?, statusCode?)` - sets a `Content-Encoding` header and sends the data, compressed.
+  - `data: Buffer|String` - the data to compress and send.
+  - `method: String` - the compression to use. Can be `gzip` or `deflate`.
+  - `callback(err): Function?` - calls back when the request has been served.
+    - `err: Error?` - the error that occured while reading or getting the last modified date of the file. `undefined` if no error occured.
+  - `statusCode: Number?` - the status code to send with this request. Defaults to `200`.

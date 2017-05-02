@@ -4,6 +4,7 @@ const cookie = require('cookie'),
 fs = require('fs'),
 mime = require('mime'),
 path = require('path'),
+zlib = require('zlib'),
 camelCaseHeaders = require('../camelCaseHeaders');
 
 module.exports = function(req, res, next) {
@@ -226,6 +227,34 @@ module.exports = function(req, res, next) {
 		// Upload the file
 
 		this.uploadFile(filePath, cb);
+	};
+
+	res.endCompressed = function (data, method, cb, statusCode) {
+
+		// Set defaults
+
+		statusCode = statusCode || 200;
+		cb = cb || function() { };
+
+		// Set the Content-Encoding header
+
+		this.writeHead(statusCode, {
+			'contentEncoding' : method
+		});
+
+		// Compress the data using the specified method
+
+		zlib[method](data, (err, compressedData) => {
+
+			// Check for an error
+
+			if (err) {
+				cb(err);
+			} else {
+				this.end(compressedData);
+				cb();
+			}
+		});
 	};
 
 	next();
