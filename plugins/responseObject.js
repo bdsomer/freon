@@ -130,7 +130,11 @@ module.exports = function(req, res, next) {
 		this.end(this.app.notFoundPage);
 	};
 
-	res.endFile = function(filePath, cb) {
+	res.endFile = function(filePath, cb, statusCode) {
+
+		// Set defaults
+
+		statusCode = statusCode || 200;
 
 		// Callback defaults to empty function
 
@@ -150,7 +154,6 @@ module.exports = function(req, res, next) {
 			} else {
 				
 				// If not, send the file
-
 				// Get last modified date
 
 				fs.stat(filePath, (err, stats) => {
@@ -178,15 +181,39 @@ module.exports = function(req, res, next) {
 
 						// Set headers
 
-						this.writeHead(200, { contentType, lastModified });
-						
-						// Send the data
+						this.setHeader('contentType', contentType);
+						this.setHeader('lastModified', lastModified);
 
-						this.end(data);
+						// When compression completes, check for an error and call back
 
-						// Call back
+						const onCompressionComplete = (err) => {
+							if (err) {
+								cb(err);
+							} else {
+								cb();
+							}
+						};
 
-						cb();
+						// Use compression
+
+						if (req.acceptsEncoding('gzip')) {
+							this.endCompressed(data, 'gzip', onCompressionComplete, statusCode);
+						} else if (req.acceptsEncoding('deflate')) {
+							this.endCompressed(data, 'deflate', onCompressionComplete, statusCode);
+						} else {
+							// No compression available, send data raw
+							// Set headers
+
+							this.writeHead(statusCode, { contentType, lastModified });
+							
+							// Send the data
+
+							this.end(data);
+
+							// Call back
+
+							cb();
+						}
 					}
 				});
 			}
@@ -218,7 +245,7 @@ module.exports = function(req, res, next) {
 		_setHeader('Content-Disposition', contentDisposition);
 	};
 
-	res.uploadFile = function(filePath, cb) {
+	res.uploadFile = function(filePath, cb, statusCode) {
 
 		// Call attachContent
 
@@ -226,10 +253,10 @@ module.exports = function(req, res, next) {
 
 		// Upload the file
 
-		this.uploadFile(filePath, cb);
+		this.endFile(filePath, cb, statusCode);
 	};
 
-	res.endCompressed = function (data, method, cb, statusCode) {
+	res.endCompressed = function (data, compressionMethod, cb, statusCode) {
 
 		// Set defaults
 
@@ -239,12 +266,12 @@ module.exports = function(req, res, next) {
 		// Set the Content-Encoding header
 
 		this.writeHead(statusCode, {
-			'contentEncoding' : method
+			'contentEncoding' : compressionMethod
 		});
 
-		// Compress the data using the specified method
+		// Compress the data using the specified compression method
 
-		zlib[method](data, (err, compressedData) => {
+		zlib[compressionMethod](data, (err, compressedData) => {
 
 			// Check for an error
 

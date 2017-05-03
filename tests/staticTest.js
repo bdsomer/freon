@@ -32,7 +32,7 @@ const createRequest = (pathname, encodings, headers) => {
 	const writeHead = (_statusCode, _headers) => {
 		statusCode = _statusCode;
 		_headers = _headers || { };
-		headers = Object.assign(_headers, headers);
+		Object.assign(headers, _headers);
 	};
 	const setHeader = (key, value) => headers[key] = value;
 	const options = { writeHead, setHeader, 'end' : data => end(data, statusCode, headers) };

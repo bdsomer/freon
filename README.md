@@ -157,19 +157,21 @@ Freon will overwrite the request and response object. The properties and methods
   - **note** use `eTag` for `ETag`.
 - `writeHead(statusCode, statusMessage?, headers?)` - an overwritten version of the normal `writeHead` method that accepts `camelCase` keys for headers.
   - **note** use `eTag` for `ETag`.
-- `endFile(filePath, callback?)` - reads the file at the specified path and serves it to the client with a `Content-Type` header and a `Last-Modified` header.
+- `endFile(filePath, callback?, statusCode?)` - reads the file at the specified path and serves it to the client with a `Content-Type` header and a `Last-Modified` header. It will also compress the data using `gzip` if possible, then `deflate` as a fallback.
   - `filePath: String` - the path to read the data from.
   - `callback(err): Function?` - calls back when the request has been served.
     - `err: Error?` - the error that occured while reading or getting the last modified date of the file. `undefined` if no error occured.
+  - `statusCode: Number?` - the status code to send with this request. Defaults to `200`.
 - `attachContent(contentPath?)` - sets a `Content-Disposition` header and a `Content-Type` header, causing the client to open a 'Save File' dialog on the connection end.
   - `contentPath: String?` - if not present, sets the `Content-Disposition` header to `attachment`. If present, sets the `filename` property of the `Content-Disposition` header to the basename of the `contentPath`.
-- `uploadFile(filePath, callback?)` - sets a `Content-Disposition` header, `Content-Type` header, and `Last-Modified` header and then sends the file to the client, causing the client to open a 'Save File' dialog.
+- `uploadFile(filePath, callback?, statusCode?)` - sets a `Content-Disposition` header, `Content-Type` header, and `Last-Modified` header and then sends the file to the client, causing the client to open a 'Save File' dialog.
   - `filePath: String` - the path to read the data from. This paramater is also used to set the filename on download.
   - `callback(err): Function?` - calls back when the request has been served.
     - `err: Error?` - the error that occured while reading or getting the last modified date of the file. `undefined` if no error occured.
-- `endCompressed(data, method, callback?, statusCode?)` - sets a `Content-Encoding` header and sends the data, compressed.
+  - `statusCode: Number?` - the status code to send with this request. Defaults to `200`.
+- `endCompressed(data, compressionMethod, callback?, statusCode?)` - sets a `Content-Encoding` header and sends the data, compressed.
   - `data: Buffer|String` - the data to compress and send.
-  - `method: String` - the compression to use. Can be `gzip` or `deflate`.
+  - `compressionMethod: String` - the compression method to use. Can be `gzip` or `deflate`.
   - `callback(err): Function?` - calls back when the request has been served.
     - `err: Error?` - the error that occured while reading or getting the last modified date of the file. `undefined` if no error occured.
   - `statusCode: Number?` - the status code to send with this request. Defaults to `200`.
