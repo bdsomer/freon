@@ -1,5 +1,5 @@
 # freon
-Fast, dependency-free server-side web framework.
+Fast server-side web framework
 
 [![freon on NPM](https://nodei.co/npm/freon.png)](https://npmjs.com/package/freon)
 
