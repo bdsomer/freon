@@ -1,6 +1,6 @@
 const assert = require('assert'),
-camelCaseHeaders = require('../camelCaseHeaders'),
-Freon = require('../index');
+camelCaseHeaders = require('../lib/camelCaseHeaders'),
+Freon = require('../lib/index');
 
 const notFoundPage = '404 - The webpage wasn\'t found ;(',
 notFoundPageHeaders = { 'someNotFoundPageHeader' : 'some not found page key' },

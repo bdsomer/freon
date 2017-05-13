@@ -1,7 +1,7 @@
 const assert = require('assert'),
 fs = require('fs'),
 zlib = require('zlib'),
-responseObject = require('../plugins/responseObject');
+responseObject = require('../lib/plugins/responseObject');
 
 const notFoundPage = 'A not found page...',
 notFoundPageHeaders = {

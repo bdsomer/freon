@@ -1,4 +1,4 @@
-const requestObject = require('../plugins/requestObject.js'),
+const requestObject = require('../lib/plugins/requestObject.js'),
 assert = require('assert');
 
 const request = {

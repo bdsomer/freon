@@ -1,12 +1,12 @@
-const camelCaseHeaders = require('../camelCaseHeaders'),
+const camelCaseHeaders = require('../lib/camelCaseHeaders'),
 assert = require('assert');
 
 module.exports = {
 	'headerStringToCamel' : {
 		'should convert an HTTP header key to a camelCase format' : () => {
 			assert.strictEqual(camelCaseHeaders.headerStringToCamel('some-random-header'), 'someRandomHeader');
-		}, 'should convert ETag to eTag': () => {
-			assert.strictEqual(camelCaseHeaders.headerStringToCamel('ETag'), 'eTag');
+		}, 'should convert etag to eTag': () => {
+			assert.strictEqual(camelCaseHeaders.headerStringToCamel('etag'), 'eTag');
 		}
 	}, 'headerObjectToCamel' : {
 		'should convert an object with HTTP header keys to an object with camelCase keys' : () => {
@@ -32,7 +32,7 @@ module.exports = {
 				'contentType' : 'text/plain'
 			}), {
 				'X-Requested-With' : 'test',
-				'Some-Other-Header' : 'anotherTest',
+				'Some-Other-Header' : 'anotherTest', // Yes, custom headers are returned as uppercase, it's weird
 				'Content-Type' : 'text/plain'
 			});
 		}

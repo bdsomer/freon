@@ -35,7 +35,6 @@ You can access these plugins manually if loading of them is disabled. The `reque
   - `notFoundPage: String|BufferType?` - A page to be served when no handlers are found. Defaults to `''`.
   - `notFoundPageHeaders: {String : String}?` - Headers to be served when no handlers are found. Defaults to `{'contentType' : 'text/plain'}`.
     - **note** the keys of this object are `camelCase`, not the usual `Non-Camel-Case`.
-    - **note** use `eTag` for `ETag`.
 - `on(options, callback)` - adds a handler.
   - `options: {method: String|RegExp, path: String|RegExp}` - Which method to listen for and which path to listen on. For example, `method` could be `'POST'` and `path` could be `/\/.+/`
   - `callback: Function` - The function that is to be called when a request is made with the specified `method` and `path`
@@ -154,9 +153,7 @@ Freon will overwrite the request and response object. The properties and methods
   - `statusCode: Number?` - the status code to send to the client with this redirect.
 - `send404()` - sends a 404 to the client using `app.notFoundPage`.
 - `setHeader(name, value)` - an overwritten version of the normal `setHeader` method that accepts `camelCase` names.
-  - **note** use `eTag` for `ETag`.
 - `writeHead(statusCode, statusMessage?, headers?)` - an overwritten version of the normal `writeHead` method that accepts `camelCase` keys for headers.
-  - **note** use `eTag` for `ETag`.
 - `endFile(filePath, callback?, statusCode?)` - reads the file at the specified path and serves it to the client with a `Content-Type` header and a `Last-Modified` header. It will also compress the data using `gzip` if possible, then `deflate` as a fallback.
   - `filePath: String` - the path to read the data from.
   - `callback(err): Function?` - calls back when the request has been served.

@@ -3,7 +3,7 @@ url = require('url'),
 qs = require('querystring'),
 cookie = require('cookie'),
 userAgent = require('user-agent'),
-requestObject = require('../plugins/requestObject');
+requestObject = require('../lib/plugins/requestObject');
 
 const testUrl = 'http://localhost',
 test = (request, property, expectedValue, deepEqual) => {

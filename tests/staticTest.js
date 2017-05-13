@@ -1,7 +1,7 @@
 const fileDir = 'tests/files';
 
 const assert = require('assert'),
-static = require('../plugins/static')(fileDir),
+static = require('../lib/plugins/static')(fileDir),
 fs = require('fs'),
 zlib = require('zlib');
 
