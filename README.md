@@ -100,7 +100,7 @@ Freon will overwrite the request and response object. The properties and methods
 
 - `headers: {String : String}` - camelCase headers.
 - `url: {String : String}` - a parsed version of `req.url`. See the [Node.js docs](https://nodejs.org/dist/latest-v6.x/docs/api/url.html).
-- `body: String` - the data sent by the client.
+- `body: Buffer` - the data sent by the client.
 - `cookies: {String : String}` - cookies sent by the client.
 - `ip: String` - external request IP address.
   - **note** this property gives the `X-Forwarded-For` header priority, making it very easy to spoof. Use `connectionIp` instead for a much more legitament IP address.
