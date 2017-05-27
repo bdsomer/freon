@@ -36,11 +36,7 @@ userAgentFull = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537
 userAgentParsed = userAgent.parse(userAgentFull);
 
 module.exports = {
-	'url' : {
-		'should be parsed' : test({
-			'url' : testUrl
-		}, 'url', testUrlParsed, true)
-	}, 'cookies' : {
+	'cookies' : {
 		'should be parsed' : test({
 			'headers' : {
 				'cookie' : [cookie.serialize('foo', 'bar'), cookie.serialize('key', 'val')].join(';')
