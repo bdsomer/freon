@@ -69,12 +69,14 @@ module.exports = {
 		}, 'should send a 304 when the correct last modified date is served' : () => {
 			return new Promise((resolve, reject) => {
 				request(cacheFilePath, (res) => {
-					const lastModified = res.headers['Last-Modified'];
-					const obj = {
-						'ifModifiedSince' : lastModified
-					};
+					const ifModifiedSince = res.headers['Last-Modified'];
+					const obj = { ifModifiedSince };
+					console.log(obj);
 					request(cacheFilePath, (res2) => {
 						try {
+							console.log(res2);
+							console.log(res2.body);
+							console.log(!res2.body);
 							assert.ok(!res2.body);
 							assert.strictEqual(res2.statusCode, 304);
 						} catch (err) {
