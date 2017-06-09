@@ -83,13 +83,25 @@ const app = new Freon.application(['example.com']);
 app.plugin(require('./fooBarPlugin.js'));
 ```
 
-# Static
+## static
 
-Use `Freon.static` to serve a static folder. It will be compressed using `gzip` and `deflate`, serve strong `ETag`s, and send the `Last-Modified` header. If the file is not found in the directory, it will then pass on the request to the next handlers.
+Use `Freon.static` to serve a static folder. It will be compressed using `gzip` and `deflate`, send the `Last-Modified` header, and send `304` status codes without a body when possible. If the file is not found in the directory, it will then pass on the request to the next handlers.
 
 ```javascript
 const app = new Freon.application(['example.com']);
 app.plugin(Freon.static('someRandomDir/theDirToServeWebFilesFrom'));
+```
+
+## shouldCompress
+
+Use `Freon.shouldCompress` to detect if compressing a file would be a good descision. For more information, see [this](http://www.itworld.com/article/2693941/cloud-computing/why-it-doesn-t-make-sense-to-gzip-all-content-from-your-web-server.html) article.
+
+To get the file size, it is reccomended that you use the `fs.stats` method to extract the `size` property.
+
+```javascript
+Freon.shouldCompress(25, '/path/to/file.txt'); // false, file is too small
+Freon.shouldCompress(50000, '/vendor/css/bigcss.min.css') // true
+Freon.shouldCompress(3000, 'myImage.png') // false, compressing images could make them larger
 ```
 
 Freon will overwrite the request and response object. The properties and methods that it adds are as follows.
@@ -166,9 +178,9 @@ Freon will overwrite the request and response object. The properties and methods
   - `callback(err): Function?` - calls back when the request has been served.
     - `err: Error?` - the error that occured while reading or getting the last modified date of the file. `undefined` if no error occured.
   - `statusCode: Number?` - the status code to send with this request. Defaults to `200`.
-- `endCompressed(data, compressionMethod, callback?, statusCode?)` - sets a `Content-Encoding` header and sends the data, compressed.
-  - `data: Buffer|String` - the data to compress and send.
-  - `compressionMethod: String` - the compression method to use. Can be `gzip` or `deflate`.
+- `endCompressed(data, compressionMethod?, callback?, statusCode?, forceCompression?)` - sets a `Content-Encoding` header and sends the data, compressed.
+  - `data: Buffer|Stream|String` - the data to compress and send.
+  - `compressionMethod: String?` - the compression method to use. Can be `gzip` or `deflate`. If not provided, will choose one, depending on what the client desires.
   - `callback(err): Function?` - calls back when the request has been served.
     - `err: Error?` - the error that occured while reading or getting the last modified date of the file. `undefined` if no error occured.
   - `statusCode: Number?` - the status code to send with this request. Defaults to `200`.
