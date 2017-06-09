@@ -74,7 +74,6 @@ module.exports = {
 					console.log(obj);
 					request(cacheFilePath, (res2) => {
 						try {
-							console.log(res2);
 							console.log(res2.body);
 							console.log(!res2.body);
 							assert.ok(!res2.body);
