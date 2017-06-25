@@ -1,5 +1,4 @@
 const assert = require('assert'),
-camelCaseHeaders = require('../lib/camelCaseHeaders'),
 Freon = require('../lib/index');
 
 const notFoundPage = '404 - The webpage wasn\'t found ;(',
@@ -30,7 +29,7 @@ module.exports = {
 	'constructor()' : {
 		'should set properties correctly' : () => {
 			assert.strictEqual(testApp.notFoundPage, notFoundPage);
-			assert.deepStrictEqual(testApp.notFoundPageHeaders, camelCaseHeaders.camelObjectToHeader(notFoundPageHeaders));
+			assert.deepStrictEqual(testApp.notFoundPageHeaders, notFoundPageHeaders);
 		}
 	}, 'on()' : {
 		'should set the "handlers" property correctly' : () => {
