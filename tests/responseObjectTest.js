@@ -144,18 +144,6 @@ module.exports = {
 			assert.strictEqual(res.body, undefined);
 			resolve();
 		})
-	}, 'send404()' : { // TODO add test 'should compress data when applicable'
-		'should send 404 as the status code' : test((res) => {
-			res.send404();
-		}, (res, resolve) => {
-			assert.strictEqual(res.statusCode, 404);
-			resolve();
-		}), 'should send the correct not found page' : test((res) => {
-			res.send404();
-		}, (res, resolve) => {
-			assert.strictEqual(res.body, notFoundPage);
-			resolve();
-		})
 	}, 'endFile()' : {
 		'should send the file data' : test((res) => {
 			res.endFile(testFilePath);
