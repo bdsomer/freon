@@ -143,6 +143,11 @@ module.exports = {
 		}, (res, resolve) => {
 			assert.strictEqual(res.body, undefined);
 			resolve();
+		}), 'should set the content type header to "text/plain"' : test((res) => {
+			res.redirect('https://example.com');
+		}, (res, resolve) => {
+			assert.strictEqual(res.headers.contentType, 'text/plain');
+			resolve();
 		})
 	}, 'endFile()' : {
 		'should send the file data' : test((res) => {
