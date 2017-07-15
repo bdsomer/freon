@@ -55,6 +55,9 @@ You can access these plugins manually if loading of them is disabled. The `reque
   - `httpsOptions: Object?` - the `key` and `cert` to use (in PEM format) or the `pfx` data to use. See the [Node.js docs](https://nodejs.org/docs/latest-v5.x/api/https.html#https_https_createserver_options_requestlistener).
 - `plugin(plugin)` - adds a plugin.
   - `plugin: Function` - the plugin to load. See documentation below.
+- `testRequest(req, res)` - sends a "fake" request. Should only be used for testing.
+  - `req: Object` - the request object. By default, some fields are set, such as `connection.remoteAddress`.
+  - `res: Object` - the response object. By default, some fields are set, such as `res.setHeader`.
 - `notFoundPage: String|Buffer` - the page to be served when no handlers were found or when the client's `Host` header did not match one of the application's domains.
 - `notFoundPageHeader: {String : String}` - the headers to be served when no handlers were found or when the client's `Host` header did not match one of the application's domains.
 - `handlers: {options: {method: String, pathname: String|RegExp}, callback: Function}[]` - the application's handlers.
