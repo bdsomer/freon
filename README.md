@@ -35,18 +35,19 @@ You can access these plugins manually if loading of them is disabled. The `reque
   - `notFoundPage: String|BufferType?` - A page to be served when no handlers are found. Defaults to `''`.
   - `notFoundPageHeaders: {String : String}?` - Headers to be served when no handlers are found. Defaults to `{'contentType' : 'text/plain'}`.
     - **note** the keys of this object are `camelCase`, not the usual `Non-Camel-Case`.
+  - `maxClientBytes: Number` - The maximum number of bytes that the client is allowed to send in the body before the connection is destroyed. Use this to prevent denial of service attacks. By default, it is left undefined, allowing an infinite number of bytes.
 - `on(options, callback)` - adds a handler.
   - `options: {method: String|RegExp, path: String|RegExp}` - Which method to listen for and which path to listen on. For example, `method` could be `'POST'` and `path` could be `/\/.+/`
   - `callback: Function` - The function that is to be called when a request is made with the specified `method` and `path`
     - `request: ClientRequest` - The request sent by the client. See the [Node.js docs](https://nodejs.org/dist/latest-v6.x/docs/api/http.html#http_class_http_clientrequest).
     - `response: ServerResponse` - The response that is to be sent by the server. See the [Node.js docs](https://nodejs.org/dist/latest-v6.x/docs/api/http.html#http_class_http_serverresponse).
-    - `next: Function` - The function that is to be called after the plugin has finished loading.
+    - `regExpResult: Array` - The result of the execution of the `options.path` regular expression. Not defined if `options.path` is a String.
 - `onGet(path, callback), onPost(path, callback), onPut(path, callback), onDelete(path, callback)` - shorthands of calling `on(options, callback)`.
-  - `path` - the path to listen for.
-  - `callback` - what to call back to when a request is made to this handler.
+  - `path: String|RegExp` - the path to listen for.
+  - `callback: Function` - what to call back to when a request is made to this handler. See `on(options, callback)` for more information.
 - `onAny(path, callback)` - listens for any connection on the specified path.
   - `path` - the path to listen for.
-  - `callback` - what to call back to when a request is made to this handler.
+  - `callback` - what to call back to when a request is made to this handler. See `on(options, callback)` for more information.
 - `listen(port, callback, httpsPort, httpsOptions)` - starts the server.
   - `port: Number` - The TCP port to listen on for HTTP requests.
   - `callback: Function?` - What to call back to when the server starts.

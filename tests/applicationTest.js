@@ -3,7 +3,7 @@ Freon = require('../lib/index');
 
 const notFoundPage = '404 - The webpage wasn\'t found ;(',
 notFoundPageHeaders = { 'someNotFoundPageHeader' : 'some not found page key' },
-testApp = new Freon.Application(undefined, notFoundPage, notFoundPageHeaders, true);
+testApp = new Freon.Application(undefined, notFoundPage, notFoundPageHeaders);
 
 const createResponse = (on404, options) => {
 	options = options || { };
@@ -24,6 +24,8 @@ const createRequest = request => {
 		'headers' : { }
 	}, request);
 };
+
+const default404 = (reject) => () => reject(new Error('404 should not be written.'));
 
 module.exports = {
 	'constructor()' : {
@@ -54,16 +56,25 @@ module.exports = {
 			});
 		}, 'should get called on a reqest to it' : () => {
 			return new Promise((resolve, reject) => {
-				const on404 = () => {
-					reject(new Error('404 should not be written.'));
-				};
 				testApp.onDelete('/testPath', () => {
 					resolve();
 				});
 				testApp.testRequest(createRequest({
 					'url' : 'http://127.0.0.1/testPath',
 					'method' : 'DELETE'
-				}), createResponse(on404));
+				}), createResponse(default404(reject)));
+			});
+		}, 'should return the result of the RegExp as the third argument of the callback' : () => {
+			return new Promise((resolve, reject) => {
+				testApp.handlers = [ ];
+				testApp.onPost(/someNew(....)/, (req, res, regExp) => {
+					assert.strictEqual(regExp[1], 'Path');
+					resolve();
+				});
+				testApp.testRequest(createRequest({
+					'url' : 'http://127.0.0.1/someNewPath',
+					'method' : 'POST'
+				}), createResponse(default404(reject)));
 			});
 		}
 	}, 'onAny()': {
