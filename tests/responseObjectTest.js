@@ -26,7 +26,7 @@ test = (callback, endCallback, acceptEncodings) => {
 				endCallback(this, resolve, reject);
 			};
 			const acceptsEncoding = (encoding) => acceptEncodings.indexOf(encoding) > -1;
-			const req = { acceptsEncoding, acceptEncodings };
+			const req = { 'headers': { }, acceptsEncoding, acceptEncodings };
 			const res = Object.assign(new EasyWritable(), { app, writeHead, end, setHeader, 'headers' : { } });
 			responseObject(req, res, function() { });
 			callback(res, resolve, reject);
@@ -181,7 +181,7 @@ module.exports = {
 			res.endFile(testFilePath);
 		}, (res, resolve, reject) => {
 			try {
-				assert.deepStrictEqual(res.headers['Last-Modified'], testFileLastModified);
+				assert.deepStrictEqual(res.headers['Last-Modified'], testFileLastModified.toString());
 				resolve();
 			} catch (err) {
 				reject(err);
@@ -200,6 +200,17 @@ module.exports = {
 		}, (res, resolve, reject) => {
 			try {
 				assert.strictEqual(res.statusCode, 404);
+				resolve();
+			} catch (err) {
+				reject(err);
+			}
+		}), 'should not send last-modified header if disabled' : test((res) => {
+			res.endFile(testFilePath, null, null, {
+				'lastModified' : false
+			});
+		}, (res, resolve, reject) => {
+			try {
+				assert.strictEqual(res.headers['Last-Modified'], undefined);
 				resolve();
 			} catch (err) {
 				reject(err);

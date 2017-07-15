@@ -30,18 +30,18 @@ You can access these plugins manually if loading of them is disabled. The `reque
 
 # `Freon.Application`
 
-- `constructor(domains, notFoundPage, notFoundPageHeaders, preventDefaultPlugins)` - creates an application.
-  - `domains: String[]|RegExp[]?` - A list of domains to listen on, ex. `['example.com', /.+\.example.com/]`. Defaults to accept all requests.
-  - `notFoundPage: String|BufferType?` - A page to be served when no handlers are found. Defaults to `''`.
-  - `notFoundPageHeaders: {String : String}?` - Headers to be served when no handlers are found. Defaults to `{'contentType' : 'text/plain'}`.
+- `constructor(domains, notFoundPage?, notFoundPageHeaders?, maxClientBytes?)` - creates an application.
+  - `domains: String[]|RegExp[]?` - a list of domains to listen on, ex. `['example.com', /.+\.example.com/]`. Defaults to accept all requests.
+  - `notFoundPage: String|BufferType?` - a page to be served when no handlers are found. Defaults to `''`.
+  - `notFoundPageHeaders: {String : String}?` - headers to be served when no handlers are found. Defaults to `{'contentType' : 'text/plain'}`.
     - **note** the keys of this object are `camelCase`, not the usual `Non-Camel-Case`.
-  - `maxClientBytes: Number` - The maximum number of bytes that the client is allowed to send in the body before the connection is destroyed. Use this to prevent denial of service attacks. By default, it is left undefined, allowing an infinite number of bytes.
+  - `maxClientBytes: Number?` - the maximum number of bytes that the client is allowed to send in the body before the connection is destroyed. Use this to prevent denial of service attacks. By default, it is left undefined, allowing an infinite number of bytes.
 - `on(options, callback)` - adds a handler.
   - `options: {method: String|RegExp, path: String|RegExp}` - Which method to listen for and which path to listen on. For example, `method` could be `'POST'` and `path` could be `/\/.+/`
-  - `callback: Function` - The function that is to be called when a request is made with the specified `method` and `path`
-    - `request: ClientRequest` - The request sent by the client. See the [Node.js docs](https://nodejs.org/dist/latest-v6.x/docs/api/http.html#http_class_http_clientrequest).
-    - `response: ServerResponse` - The response that is to be sent by the server. See the [Node.js docs](https://nodejs.org/dist/latest-v6.x/docs/api/http.html#http_class_http_serverresponse).
-    - `regExpResult: Array` - The result of the execution of the `options.path` regular expression. Not defined if `options.path` is a String.
+  - `callback: Function` - the function that is to be called when a request is made with the specified `method` and `path`
+    - `request: ClientRequest` - the request sent by the client. See the [Node.js docs](https://nodejs.org/dist/latest-v6.x/docs/api/http.html#http_class_http_clientrequest).
+    - `response: ServerResponse` - the response that is to be sent by the server. See the [Node.js docs](https://nodejs.org/dist/latest-v6.x/docs/api/http.html#http_class_http_serverresponse).
+    - `regExpResult: Array` - the result of the execution of the `options.path` regular expression. Not defined if `options.path` is a String.
 - `onGet(path, callback), onPost(path, callback), onPut(path, callback), onDelete(path, callback)` - shorthands of calling `on(options, callback)`.
   - `path: String|RegExp` - the path to listen for.
   - `callback: Function` - what to call back to when a request is made to this handler. See `on(options, callback)` for more information.
@@ -49,15 +49,15 @@ You can access these plugins manually if loading of them is disabled. The `reque
   - `path` - the path to listen for.
   - `callback` - what to call back to when a request is made to this handler. See `on(options, callback)` for more information.
 - `listen(port, callback, httpsPort, httpsOptions)` - starts the server.
-  - `port: Number` - The TCP port to listen on for HTTP requests.
+  - `port: Number` - the TCP port to listen on for HTTP requests.
   - `callback: Function?` - What to call back to when the server starts.
-  - `httpsPort: Number?` - The TCP port to listen on for HTTPS requests.
-  - `httpsOptions: Object?` - The `key` and `cert` to use (in PEM format) or the `pfx` data to use. See the [Node.js docs](https://nodejs.org/docs/latest-v5.x/api/https.html#https_https_createserver_options_requestlistener).
+  - `httpsPort: Number?` - the TCP port to listen on for HTTPS requests.
+  - `httpsOptions: Object?` - the `key` and `cert` to use (in PEM format) or the `pfx` data to use. See the [Node.js docs](https://nodejs.org/docs/latest-v5.x/api/https.html#https_https_createserver_options_requestlistener).
 - `plugin(plugin)` - adds a plugin.
   - `plugin: Function` - the plugin to load. See documentation below.
-- `notFoundPage: String|Buffer` - The page to be served when no handlers were found or when the client's `Host` header did not match one of the application's domains.
-- `notFoundPageHeader: {String : String}` - The headers to be served when no handlers were found or when the client's `Host` header did not match one of the application's domains.
-- `handlers: {options: {method: String, pathname: String|RegExp}, callback: Function}[]` - The application's handlers.
+- `notFoundPage: String|Buffer` - the page to be served when no handlers were found or when the client's `Host` header did not match one of the application's domains.
+- `notFoundPageHeader: {String : String}` - the headers to be served when no handlers were found or when the client's `Host` header did not match one of the application's domains.
+- `handlers: {options: {method: String, pathname: String|RegExp}, callback: Function}[]` - the application's handlers.
 - `plugins: Function[]` - the plugins that this app has loaded.
 
 # Plugins
@@ -101,8 +101,8 @@ To get the file size, it is reccomended that you use the `fs.stats` method to ex
 
 ```javascript
 Freon.shouldCompress(25, '/path/to/file.txt'); // false, file is too small
-Freon.shouldCompress(50000, '/vendor/css/bigcss.min.css') // true
-Freon.shouldCompress(3000, 'myImage.png') // false, compressing images could make them larger
+Freon.shouldCompress(50000, '/vendor/css/bigcss.min.css'); // true
+Freon.shouldCompress(3000, 'myImage.png'); // false, compressing images could make them larger
 ```
 
 Freon will overwrite the request and response object. The properties and methods that it adds are as follows.
@@ -167,11 +167,13 @@ Freon will overwrite the request and response object. The properties and methods
 - `send404()` - sends a 404 to the client using `app.notFoundPage`.
 - `setHeader(name, value)` - an overwritten version of the normal `setHeader` method that accepts `camelCase` names.
 - `writeHead(statusCode, statusMessage?, headers?)` - an overwritten version of the normal `writeHead` method that accepts `camelCase` keys for headers.
-- `endFile(filePath, callback?, statusCode?)` - reads the file at the specified path and serves it to the client with a `Content-Type` header and a `Last-Modified` header. It will also compress the data using `gzip` if possible, then `deflate` as a fallback.
+- `endFile(filePath, callback?, statusCode?, options?)` - reads the file at the specified path and serves it to the client with a `Content-Type` header and a `Last-Modified` header. It will also compress the data using `gzip` if possible, then `deflate` as a fallback.
   - `filePath: String` - the path to read the data from.
   - `callback(err): Function?` - calls back when the request has been served.
     - `err: Error?` - the error that occured while reading or getting the last modified date of the file. `undefined` if no error occured.
   - `statusCode: Number?` - the status code to send with this request. Defaults to `200`.
+  - `options: Object` - options.
+    - `lastModified: Boolean` - when set to `true`, a `304` status code will be sent if the client claims to have the most recent version of the file and the `Last-Modified` header will be sent. When set to `false`, `304` status codes are never sent and the `Last-Modified` header will never be sent.
 - `attachContent(contentPath?)` - sets a `Content-Disposition` header and a `Content-Type` header, causing the client to open a 'Save File' dialog on the connection end.
   - `contentPath: String?` - if not present, sets the `Content-Disposition` header to `attachment`. If present, sets the `filename` property of the `Content-Disposition` header to the basename of the `contentPath`.
 - `uploadFile(filePath, callback?, statusCode?)` - sets a `Content-Disposition` header, `Content-Type` header, and `Last-Modified` header and then sends the file to the client, causing the client to open a 'Save File' dialog.
@@ -179,6 +181,7 @@ Freon will overwrite the request and response object. The properties and methods
   - `callback(err): Function?` - calls back when the request has been served.
     - `err: Error?` - the error that occured while reading or getting the last modified date of the file. `undefined` if no error occured.
   - `statusCode: Number?` - the status code to send with this request. Defaults to `200`.
+  - `options: Object` - see `endFile(filePath, callback?, statusCode? options?)`.
 - `endCompressed(data, compressionMethod?, callback?, statusCode?, forceCompression?)` - sets a `Content-Encoding` header and sends the data, compressed.
   - `data: Buffer|Stream|String` - the data to compress and send.
   - `compressionMethod: String?` - the compression method to use. Can be `gzip` or `deflate`. If not provided, will choose one, depending on what the client desires.
