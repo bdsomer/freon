@@ -1,6 +1,6 @@
 {
 	"name": "freon",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"description": "Fast server-side web framework",
 	"main": "lib/index.js",
 	"scripts": {
