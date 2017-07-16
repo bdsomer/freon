@@ -37,7 +37,7 @@ You can access these plugins manually if loading of them is disabled. The `reque
     - **note** the keys of this object are `camelCase`, not the usual `Non-Camel-Case`.
   - `maxClientBytes: Number?` - the maximum number of bytes that the client is allowed to send in the body before the connection is destroyed. Use this to prevent denial of service attacks. By default, it is left undefined, allowing an infinite number of bytes.
 - `on(options, callback)` - adds a handler.
-  - `options: {method: String|RegExp, path: String|RegExp}` - Which method to listen for and which path to listen on. For example, `method` could be `'POST'` and `path` could be `/\/.+/`
+  - `options: {method: String|RegExp, pathname: String|RegExp}` - Which method to listen for and which path to listen on. For example, `method` could be `'POST'` and `pathname` could be `/\/.+/`
   - `callback: Function` - the function that is to be called when a request is made with the specified `method` and `path`
     - `request: ClientRequest` - the request sent by the client. See the [Node.js docs](https://nodejs.org/dist/latest-v6.x/docs/api/http.html#http_class_http_clientrequest).
     - `response: ServerResponse` - the response that is to be sent by the server. See the [Node.js docs](https://nodejs.org/dist/latest-v6.x/docs/api/http.html#http_class_http_serverresponse).
