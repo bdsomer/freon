@@ -21,13 +21,6 @@ app.onGet(/\/.+\.html/, (req, res, next) => {
 const Freon = require('freon');
 ```
 
-Freon comes with two plugins loaded by default:
-
-- `requestObject`
-- `responseObject`
-
-You can access these plugins manually if loading of them is disabled. The `requestObject` plugin, for example, is located at `Freon.plugins.requestObject`.
-
 # `Freon.Application`
 
 - `constructor(domains, notFoundPage?, notFoundPageHeaders?, maxClientBytes?)` - creates an application.
