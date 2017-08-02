@@ -12,6 +12,7 @@ const createRequest = (pathname, acceptEncodings, headers) => {
 	headers = headers || { };
 	const acceptsEncoding = encoding => acceptEncodings.indexOf(encoding) > -1;
 	return {
+		'method' : 'GET',
 		'url' : {
 			'pathname' : pathname
 		}, headers, acceptsEncoding, acceptEncodings
