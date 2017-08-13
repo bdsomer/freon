@@ -1,6 +1,6 @@
 {
 	"name": "freon",
-	"version": "1.4.3",
+	"version": "1.4.4",
 	"description": "Fast server-side web framework",
 	"main": "lib/index.js",
 	"scripts": {
@@ -32,7 +32,7 @@
 	"devDependencies": {
 		"testlite": "^2.0.1"
 	},
-	"engines" : {
-		"node" : ">=6.0.0"
+	"engines": {
+		"node": ">=6.0.0"
 	}
 }
