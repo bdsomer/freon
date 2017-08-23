@@ -91,8 +91,8 @@ app.plugin(Freon.static('someRandomDir/theDirToServeWebFilesFrom'));
 ## Other useful plugins
 
 You may find these plugins useful:
-- [`@freon-plugins/cookies`](https://npmjs.com/package/@freon-plugins/cookies)
-- [`@freon-plugins/user-agent`](https://npmjs.com/package/@freon-plugins/user-agent)
+- [`freon-cookies`](https://npmjs.com/package/freon-cookies)
+- [`freon-user-agent`](https://npmjs.com/package/freon-user-agent)
 
 Freon will overwrite the request and response object. The properties and methods that it adds are as follows
 
