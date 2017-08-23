@@ -1,10 +1,9 @@
 const tl = require('testlite');
 
-tl('Application', require('./applicationTest'));
-tl('Should Compress Module', require('./shouldCompressTest'));
-tl('Camel Case Headers', require('./camelCaseHeadersTest'));
-tl('Request Object', require('./requestObjectTest'));
-tl('Request Object - Accept', require('./requestObjectAcceptTest'));
-tl('Response Object', require('./responseObjectTest'));
-tl('Static', require('./staticTest'));
+tl('Application', require('./applicationTest.js'));
+tl('Should Compress Module', require('./shouldCompressTest.js'));
+tl('Request Object', require('./requestObjectTest.js'));
+tl('Request Object - Accept', require('./requestObjectAcceptTest.js'));
+tl('Response Object', require('./responseObjectTest.js'));
+tl('Static', require('./staticTest.js'));
 tl.test();

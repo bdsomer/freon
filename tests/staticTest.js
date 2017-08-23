@@ -1,8 +1,8 @@
 const fileDir = 'tests/files';
 
 const assert = require('assert'),
-static = require('../lib/plugins/static')(fileDir),
-responseObject = require('../lib/plugins/responseObject'),
+static = require('../lib/plugins/static.js')(fileDir),
+responseObject = require('../lib/plugins/responseObject.js'),
 fs = require('fs'),
 EasyWritable = require('./easyWritable.js'),
 zlib = require('zlib');
@@ -41,7 +41,7 @@ const createRequest = (pathname, acceptEncodings, headers) => {
 		endCallback(this);
 	};
 	const setHeader = function (key, value) {
-		this.headers[key] = value
+		this.headers[key] = value;
 	};
 	const options = Object.assign(new EasyWritable(), { writeHead, setHeader, end, 'headers' : { } });
 	const request = createRequest(pathname, encodings, clientHeaders);
@@ -73,7 +73,9 @@ module.exports = {
 					var ifModifiedSince = new Date(res.headers['Last-Modified']);
 					// For some reason, CI is broken due to ~100ms offset, so we have to push the date a few seconds forward
 					ifModifiedSince.setSeconds(ifModifiedSince.getSeconds() + 5);
-					const obj = { ifModifiedSince };
+					const obj = {
+						'if-modified-since' : ifModifiedSince
+					};
 					request(cacheFilePath, (res2) => {
 						try {
 							assert.ok(!res2.body);
@@ -101,7 +103,7 @@ module.exports = {
 			return new Promise((resolve, reject) => {
 				request('/someText.txt', (res) => {
 					try {
-						assert.strictEqual(res.headers.contentEncoding, 'gzip');
+						assert.strictEqual(res.headers['Content-Encoding'], 'gzip');
 						resolve();
 					} catch (err) {
 						reject(err);
@@ -113,7 +115,7 @@ module.exports = {
 				const path = '/someText.txt';
 				request(path, (res) => {
 					fileData(path).then(fileData => {
-						zlib[res.headers.contentEncoding](fileData, (err, gzipData) => {
+						zlib[res.headers['Content-Encoding']](fileData, (err, gzipData) => {
 							try {
 								assert.strictEqual(Buffer.compare(res.body, gzipData), 0);
 								resolve();

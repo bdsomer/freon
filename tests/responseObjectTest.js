@@ -2,7 +2,7 @@ const assert = require('assert'),
 fs = require('fs'),
 zlib = require('zlib'),
 EasyWritable = require('./easyWritable.js'),
-responseObject = require('../lib/plugins/responseObject');
+responseObject = require('../lib/plugins/responseObject.js');
 
 const notFoundPage = 'A not found page...',
 notFoundPageHeaders = {
@@ -34,15 +34,6 @@ test = (callback, endCallback, acceptEncodings) => {
 	};
 };
 
-const testForCookie = (res, cookieName, cookieValue, cookieOptions) => {
-	const testCookieObject = { };
-	testCookieObject[cookieName] = {
-		'value' : cookieValue,
-		'options' : cookieOptions
-	};
-	assert.deepEqual(res.cookies[cookieName], testCookieObject[cookieName]);
-};
-
 const testFilePath = 'tests/files/someText.txt';
 const testFileData = fs.readFileSync(testFilePath);
 const testFileLastModified = fs.statSync(testFilePath).mtime;
@@ -50,84 +41,7 @@ const testFileGzipped = zlib.gzipSync(testFileData);
 const testFileDeflated = zlib.deflateSync(testFileData);
 
 module.exports = {
-	'cookies' : {
-		'should be an object' : test((res, resolve) => {
-			assert.ok(typeof res.cookies === 'object', 'typeof res.cookies !== \'object\'');
-			resolve();
-		})
-	}, 'app' : {
-		'should be the app that is handling this request' : test((res, resolve) => {
-			assert.deepEqual(res.app, app);
-			resolve();
-		})
-	}, 'addCookie()' : {
-		'should modify the cookies opject property' : test((res, resolve) => {
-			const cookieName = 'foo';
-			const cookieValue = 'bar';
-			const cookieOptions = {
-				'httpOnly' : true
-			};
-			res.addCookie(cookieName, cookieValue, cookieOptions);
-			testForCookie(res, 'foo', 'bar', cookieOptions);
-			resolve();
-		})
-	}, 'addCookies()' : {
-		'should modify the cookies object properly' : test((res, resolve) => {
-			res.addCookies({
-				'name' : 'asdf',
-				'value' : 'fdsa'
-			}, {
-				'name' : 'test',
-				'value' : 'tset'
-			});
-			testForCookie(res, 'asdf', 'fdsa');
-			testForCookie(res, 'test', 'tset');
-			resolve();
-		})
-	}, 'removeCookie()' : {
-		'should stop a cookie from being sent' : test((res, resolve) => {
-			const cookieName = '123';
-			const cookieValue = '321';
-			res.addCookie(cookieName, cookieValue);
-			res.removeCookie(cookieName);
-			assert.strictEqual(res.cookies[cookieName], undefined);
-			resolve();
-		})
-	}, 'removeCookies()' : {
-		'should stop multiple cookies from being sent' : test((res, resolve) => {
-			res.addCookies({
-				'name' : '456',
-				'value' : '654'
-			}, {
-				'name' : '789',
-				'value' : '987'
-			});
-			res.removeCookies('456', '789');
-			assert.strictEqual(res.cookies['456'], undefined);
-			assert.strictEqual(res.cookies['789'], undefined);
-			resolve();
-		})
-	}, 'deleteCookie()' : {
-		'should create an expired cookie' : test((res, resolve) => {
-			const cookieValue = 'someCookieValue';
-			res.deleteCookie(cookieValue);
-			testForCookie(res, cookieValue, '', {
-				'expires' : new Date(0)
-			});
-			resolve();
-		})
-	}, 'deleteCookies()' : {
-		'should create multiple expired cookies' : test((res, resolve) => {
-			const cookieValues = ['anotherCookieValue', 'asjdfi2037b*(&)B@0d0s(B@)(@B)@(B'];
-			res.deleteCookies(...cookieValues);
-			for (let i = 0; i < cookieValues.length; i++) {
-				testForCookie(res, cookieValues[i], '', {
-					'expires' : new Date(0)
-				});
-			}
-			resolve();
-		})
-	}, 'redirect()' : {
+	'redirect()' : {
 		'should send a 302 status code if not specified' : test((res) => {
 			res.redirect('https://example.com');
 		}, (res, resolve) => {
@@ -146,7 +60,7 @@ module.exports = {
 		}), 'should set the content type header to "text/plain"' : test((res) => {
 			res.redirect('https://example.com');
 		}, (res, resolve) => {
-			assert.strictEqual(res.headers.contentType, 'text/plain');
+			assert.strictEqual(res.headers['Content-Type'], 'text/plain');
 			resolve();
 		})
 	}, 'endFile()' : {

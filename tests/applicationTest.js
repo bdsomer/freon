@@ -1,5 +1,5 @@
 const assert = require('assert'),
-Freon = require('../lib/index');
+Freon = require('../lib/index.js');
 
 const notFoundPage = '404 - The webpage wasn\'t found ;(',
 notFoundPageHeaders = { 'someNotFoundPageHeader' : 'some not found page key' },

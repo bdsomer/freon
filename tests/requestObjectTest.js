@@ -1,9 +1,7 @@
 const assert = require('assert'),
 url = require('url'),
 qs = require('querystring'),
-cookie = require('cookie'),
-userAgent = require('user-agent'),
-requestObject = require('../lib/plugins/requestObject'),
+requestObject = require('../lib/plugins/requestObject.js'),
 EventEmitter = require('events').EventEmitter;
 
 const testUrl = 'http://localhost',
@@ -39,23 +37,12 @@ test = (request, property, expectedValue, deepStrictEqual, cb, destroy) => {
 };
 
 const testUrlParsed = url.parse(testUrl),
-queryParsed = qs.parse(testUrlParsed.query),
-userAgentFull = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
-userAgentParsed = userAgent.parse(userAgentFull);
+queryParsed = qs.parse(testUrlParsed.query);
 
 var destroyedConnection = false;
 
 module.exports = {
-	'cookies' : {
-		'should be parsed' : test({
-			'headers' : {
-				'cookie' : [cookie.serialize('foo', 'bar'), cookie.serialize('key', 'val')].join(';')
-			}
-		}, 'cookies', {
-			'foo' : 'bar',
-			'key' : 'val'
-		}, true)
-	}, 'ip' : {
+	'ip' : {
 		'should give priority to the X-Forwarded-For header' : test({
 			'headers' : {
 				'x-forwarded-for' : '123.321.123.321, 46.98.24.77'
@@ -74,12 +61,6 @@ module.exports = {
 		}, 'query', queryParsed, true)
 	}, 'secure' : {
 		'should return false on HTTP' : test({}, 'secure', false)
-	}, 'userAgent' : {
-		'should be parsed' : test({
-			'headers' : {
-				'user-agent' : userAgentFull
-			}
-		}, 'userAgent', userAgentParsed, true)
 	}, 'maxClientBytes' : {
 		'should destroy the connection when nessesary' : test(null, null, null, null, (request) => {
 			request.emit('data', new Buffer('t'.repeat(maxClientBytes)));
