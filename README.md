@@ -10,7 +10,7 @@ Fast server-side web framework
 ```javascript
 const Freon = require('freon');
 const app = new Freon.Application(['example.com', /.+\.example\.com/]);
-app.onGet(/\/.+\.html/, (req, res, next) => {
+app.onGet(/\/.+\.html/, (req, res) => {
   // Server code..
 });
 ```
