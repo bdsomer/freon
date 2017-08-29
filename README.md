@@ -23,7 +23,7 @@ const Freon = require('freon');
 
 # `Freon.Application`
 
-See [the Application docs](https://bdsomer.github.io/freon)
+See [the Application docs](https://bdsomer.github.io/freon/Application.html)
 
 # Plugins
 
