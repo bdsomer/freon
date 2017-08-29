@@ -8,4 +8,4 @@ module.exports = class extends require('stream').Writable {
 		}
 		cb();
 	}
-}
+};
