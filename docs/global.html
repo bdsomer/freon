@@ -100,10 +100,172 @@
 
         
                 
+<h4 class="name" id="handler">handler</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
 
     
 
-    <h4 class="name" id="errCallback"><span class="type-signature"></span>errCallback<span class="signature">(err<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>method</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The method to be listening for, ex. `'HEAD'`. Will default to all request methods.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">RegExp</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The path to be listening for ex. `/\/docs\/.+/`</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+
+    
+
+    <h4 class="name" id="handlerCallback"><span class="type-signature"></span>handlerCallback<span class="signature">(request, response, next<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -144,13 +306,13 @@
 
         <tr>
             
-                <td class="name"><code>err</code></td>
+                <td class="name"><code>request</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Error</span>
+<span class="param-type">Request</span>
 
 
             
@@ -158,8 +320,6 @@
 
             
                 <td class="attributes">
-                
-                    &lt;optional><br>
                 
 
                 
@@ -170,133 +330,51 @@
 
             
 
-            <td class="description last">The error, if one occured.</td>
+            <td class="description last">The request sent by the client. See https://nodejs.org/dist/latest-v6.x/docs/api/http.html#http_class_http_clientrequest.</td>
         </tr>
 
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="responseObject-doc.js.html">responseObject-doc.js</a>, <a href="responseObject-doc.js.html#line6">line 6</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-                
-<h4 class="name" id="fileOptions">fileOptions</h4>
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>lastModified</code></td>
+                <td class="name"><code>response</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Boolean</span>
+<span class="param-type">Response</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The response to be sent by the server. See https://nodejs.org/dist/latest-v6.x/docs/api/http.html#http_class_http_serverresponse.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>next</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
 
 
             
@@ -309,23 +387,21 @@
                 
 
                 
-                </td>
-            
 
-            
-                <td class="default">
-                
-                    true
                 
                 </td>
             
 
-            <td class="description last">When set to <code>true</code>, sends Last-Modified headers and 304 status codes, a.k.a. enabling caching.</td>
+            
+
+            <td class="description last">Call after this plugin has finished loading.</td>
         </tr>
 
     
     </tbody>
 </table>
+
+
 
 
 
@@ -359,7 +435,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="responseObject-doc.js.html">responseObject-doc.js</a>, <a href="responseObject-doc.js.html#line1">line 1</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line37">line 37</a>
     </li></ul></dd>
     
 
@@ -369,6 +445,16 @@
 
     
 </dl>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -389,13 +475,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DefaultResponsePlugin.html">DefaultResponsePlugin</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Application.html">Application</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Aug 28 2017 19:56:27 GMT-0700 (PDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Sep 11 2017 20:22:53 GMT-0700 (PDT)
 </footer>
 
 <script> prettyPrint(); </script>

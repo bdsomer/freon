@@ -431,7 +431,7 @@
 
     
 
-    <h4 class="name" id="listen"><span class="type-signature"></span>listen<span class="signature">(port, callback<span class="signature-attributes">opt</span>, httpsPort<span class="signature-attributes">opt</span>, httpsOptions<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="listen"><span class="type-signature"></span>listen<span class="signature">(port, callback<span class="signature-attributes">opt</span>, httpsPort<span class="signature-attributes">opt</span>, httpsOptions<span class="signature-attributes">opt</span>, hostname<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -603,6 +603,39 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>hostname</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Only accept connections from this IP address. When omitted, connections from all IP addresses are handled.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -640,7 +673,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line382">line 382</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line384">line 384</a>
     </li></ul></dd>
     
 
@@ -799,7 +832,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line272">line 272</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line273">line 273</a>
     </li></ul></dd>
     
 
@@ -956,7 +989,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line343">line 343</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line344">line 344</a>
     </li></ul></dd>
     
 
@@ -1113,7 +1146,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line331">line 331</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line332">line 332</a>
     </li></ul></dd>
     
 
@@ -1270,7 +1303,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line295">line 295</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line296">line 296</a>
     </li></ul></dd>
     
 
@@ -1427,7 +1460,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line307">line 307</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line308">line 308</a>
     </li></ul></dd>
     
 
@@ -1584,7 +1617,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line319">line 319</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line320">line 320</a>
     </li></ul></dd>
     
 
@@ -1715,161 +1748,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line286">line 286</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="request"><span class="type-signature"></span>request<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Freon's request handler. This function should not be called directly.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>req</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">request</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The incoming request.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>res</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">response</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The response to be sent.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line112">line 112</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line287">line 287</a>
     </li></ul></dd>
     
 
@@ -2023,7 +1902,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line354">line 354</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line355">line 355</a>
     </li></ul></dd>
     
 
@@ -2071,7 +1950,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Aug 28 2017 19:08:43 GMT-0700 (PDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Sep 11 2017 20:22:53 GMT-0700 (PDT)
 </footer>
 
 <script> prettyPrint(); </script>

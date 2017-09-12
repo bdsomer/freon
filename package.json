@@ -28,7 +28,7 @@
 		"mime": "^1.3.6"
 	},
 	"devDependencies": {
-		"testlite": "^2.0.1"
+		"testlite": "^2.0.2"
 	},
 	"engines": {
 		"node": ">=6.0.0"
