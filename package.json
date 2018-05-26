@@ -1,6 +1,6 @@
 {
 	"name": "freon",
-	"version": "2.0.7",
+	"version": "2.0.8",
 	"description": "Fast server-side web framework",
 	"main": "lib/index.js",
 	"scripts": {
@@ -24,8 +24,7 @@
 	},
 	"homepage": "https://github.com/bdsomer/freon#readme",
 	"dependencies": {
-		"http2": "^3.3.6",
-		"mime": "^1.3.6"
+		"mime": "^2.3.1"
 	},
 	"devDependencies": {
 		"testlite": "^2.0.2"
